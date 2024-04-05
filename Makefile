@@ -9,12 +9,6 @@ init:
 	@echo "== pre-commit setup =="
 	pre-commit install
 
-	@echo "== install go dependecies =="
-	go get
-
-	@echo "== install goimport =="
-	go get golang.org/x/tools/cmd/goimports@latest
-
 	@echo "== install ginkgo =="
 	go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo
 	go get github.com/onsi/gomega/...
@@ -29,6 +23,7 @@ precommit.rehooks:
 
 test:
 	@echo "== 🦸‍️ ci.tester =="
+	go test -v ./...
 
 ci.lint:
 	@echo "== 🙆 ci.linter =="

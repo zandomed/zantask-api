@@ -1,34 +1,47 @@
-name: Go CI
+name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Go
+      - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22.2" # You can change the Go version as needed
+          go-version: "1.22.2"
+          cache: true
 
-      - name: Install golangci-lint
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.1
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-
-      - name: Lint with golangci-lint
-        run: golangci-lint run ./...
-
-      - name: Test
+      - name: Run Tests
         run: go test -v ./...
 
       - name: Build
+        run: go build -v ./...
+  build:
+    needs: [test]
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.2"
+          cache: true
+
+      - name: Run Build
         run: go build -v ./...
