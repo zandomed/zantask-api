@@ -1,5 +1,8 @@
 {
     "recommendations": [
-        "golang.go"
+        "ms-vscode.makefile-tools",
+        "mikestead.dotenv",
+        "aaron-bond.better-comments",
+        "foxundermoon.shell-format"
     ]
 }
