@@ -11,9 +11,9 @@ import (
 )
 
 type echoServer struct {
-	app  *echo.Echo
-	db   database.Database
-	conf *config.Config
+	App  *echo.Echo
+	DB   database.Database
+	Conf *config.Config
 }
 
 func NewEchoServer(conf *config.Config, db database.Database) Server {
@@ -21,30 +21,30 @@ func NewEchoServer(conf *config.Config, db database.Database) Server {
 	echoApp.Logger.SetLevel(log.DEBUG)
 
 	return &echoServer{
-		app:  echoApp,
-		db:   db,
-		conf: conf,
+		App:  echoApp,
+		DB:   db,
+		Conf: conf,
 	}
 }
 
 func (s *echoServer) Start() {
-	s.app.Use(middleware.Recover())
-	s.app.Use(middleware.Logger())
+	s.App.Use(middleware.Recover())
+	s.App.Use(middleware.Logger())
 
 	s.loadRoutes()
 
-	port := fmt.Sprintf(":%d", s.conf.Server.Port)
-	s.app.Logger.Fatal(s.app.Start(port))
+	port := fmt.Sprintf(":%d", s.Conf.Server.Port)
+	s.App.Logger.Fatal(s.App.Start(port))
 }
 
 func (s *echoServer) Stop() {
-	s.app.Close()
+	s.App.Close()
 }
 
 func (s *echoServer) loadRoutes() {
 	// Load the handler here
 
-	s.app.GET("/health", func(c echo.Context) error {
+	s.App.GET("/health", func(c echo.Context) error {
 		return c.String(200, "OK")
 	})
 

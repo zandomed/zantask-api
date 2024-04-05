@@ -10,38 +10,38 @@ import (
 )
 
 type postgresDatabase struct {
-  Db *gorm.DB
+	DB *gorm.DB
 }
 
 var (
-  once       sync.Once
-  dbInstance *postgresDatabase
+	once       sync.Once
+	dbInstance *postgresDatabase
 )
 
 func NewPostgresDatabase(conf *config.Config) Database {
-  once.Do(func() {
-    dsn := fmt.Sprintf(
-      "host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
-      conf.Db.Host,
-      conf.Db.User,
-      conf.Db.Password,
-      conf.Db.DBName,
-      conf.Db.Port,
-      conf.Db.SSLMode,
-      conf.Db.TimeZone,
-    )
-    
-    db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-    if err != nil {
-      panic("failed to connect database")
-    }
-    
-    dbInstance = &postgresDatabase{Db: db}
-  })
+	once.Do(func() {
+		dsn := fmt.Sprintf(
+			"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
+			conf.DB.Host,
+			conf.DB.User,
+			conf.DB.Password,
+			conf.DB.DBName,
+			conf.DB.Port,
+			conf.DB.SSLMode,
+			conf.DB.TimeZone,
+		)
 
-  return dbInstance
+		db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+		if err != nil {
+			panic("failed to connect database")
+		}
+
+		dbInstance = &postgresDatabase{DB: db}
+	})
+
+	return dbInstance
 }
 
-func (p *postgresDatabase) GetDb() *gorm.DB {
-  return dbInstance.Db
+func (p *postgresDatabase) GetDB() *gorm.DB {
+	return dbInstance.DB
 }
