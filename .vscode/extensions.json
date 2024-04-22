@@ -3,6 +3,8 @@
         "ms-vscode.makefile-tools",
         "mikestead.dotenv",
         "aaron-bond.better-comments",
-        "foxundermoon.shell-format"
+        "foxundermoon.shell-format",
+        "golang.go",
+        "ms-azuretools.vscode-docker"
     ]
 }
