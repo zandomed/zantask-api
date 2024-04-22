@@ -9,5 +9,5 @@ import (
 func main() {
 	conf := config.GetConfig()
 	db := database.NewPostgresDatabase(conf)
-	server.NewEchoServer(conf, db).Start()
+	server.NewFiberServer(conf, db).Start()
 }
