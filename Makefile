@@ -22,9 +22,17 @@ precommit.rehooks:
 	pre-commit install --hook-type commit-msg
 
 test:
-	@echo "== 🦸‍️ ci.tester =="
+	@echo "== 🦸‍️ Tests =="
 	go test -v ./...
 
-ci.lint:
-	@echo "== 🙆 ci.linter =="
+lint:
+	@echo "== 🙆 Linter =="
+	golangci-lint run -v ./...
+
+lint.fix:
+	@echo "== 🙆 Linter Fix =="
 	golangci-lint run -v ./... --fix
+
+run:
+	@echo "== 🏃‍♂️ Run =="
+	go run cmd/main.go
