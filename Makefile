@@ -1,4 +1,4 @@
-.PHONY: init init.enviroment precommit.rehooks test lint lint.fix run run.docker deps.upgrade deps.install deps.clean
+.PHONY: init init.enviroment precommit.rehooks test lint lint.fix run run.docker run.dev deps.upgrade deps.install deps.clean
 
 DOCKER_COMPOSE_DEV_FILE = ./docker/docker-compose.dev.yaml
 DOCKER_PROJECT_NAME = zantask
@@ -42,6 +42,11 @@ lint.fix:
 run:
 	@echo "== 🏃‍♂️ Run =="
 	go run cmd/main.go
+
+run.dev:
+	@echo "== 🏃‍♂️ Run (Development) =="
+	go install github.com/cosmtrek/air@v1.51.0
+	air
 
 run.docker:
 	@echo "== 🏃‍♂️ Run Docker (Development) =="
