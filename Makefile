@@ -70,3 +70,8 @@ deps.clean:
 	go mod tidy
 	go mod verify
 	go clean -modcache
+
+deps.verify:
+	@echo "== 🧹 Verifying dependencies =="
+	go mod tidy
+	go mod verify
