@@ -6,7 +6,7 @@ require (
 	github.com/gofiber/fiber/v3 v3.0.0-beta.2
 	github.com/spf13/viper v1.18.2
 	gorm.io/driver/postgres v1.5.7
-	gorm.io/gorm v1.25.9
+	gorm.io/gorm v1.25.10
 )
 
 require (
